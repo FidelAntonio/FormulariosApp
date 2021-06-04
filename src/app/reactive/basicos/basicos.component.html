@@ -1,0 +1,115 @@
+<!-- nota para poder utilizar formularios  reactivos necesitamos importar ReactiveFormsModule en nuestro archivo de reactive.module.ts depende mucho si esta modularizado, despues inicializamos el formulario en el ts, para poder hacer match mi input con mi control de ts es con formControlName  -->
+
+<h2>Formularios Reactivos: Básico</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+        <form   (ngSubmit)="guardar()" 
+                autocomplete="off"
+                [formGroup]="miFormulario">
+
+            <!-- Campo del producto -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Producto</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           formControlName="nombre"
+                           placeholder="Nombre del producto"
+                          >
+                    <!-- el argumento que mando es el formControlName="nombre" -->
+                    <span class="form-text text-danger"
+                          *ngIf="campoNoEsValido('nombre')"  >
+                        Debe de ser de 3 letras
+                    </span>       
+                </div>
+            </div>
+
+             <!-- Campo del precio
+            pattern="^[0-9]" 
+                           min="1" 
+                           step="1"
+            -->
+             <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           placeholder="Precio del producto"
+                           formControlName="precio"
+                    >
+                    <span class="form-text text-danger"
+                          *ngIf="miFormulario.controls.precio.hasError('min') &&
+                                 miFormulario.controls.precio.touched   "   >
+                           El numero debe de ser mayor o igual a 0
+                    </span> 
+                    <span class="form-text text-danger"
+                          *ngIf="miFormulario.controls.precio.hasError('required')  &&
+                                 miFormulario.controls.precio.touched"   >
+                           El campo es obligatorio
+                    </span> 
+                        
+                </div>
+            </div>
+
+            
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Existencias del producto</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           formControlName="existencias"
+                           placeholder="Existencia del producto"
+                           
+                           >
+                    
+                    <span class="form-text text-danger"
+                    *ngIf="miFormulario.controls.existencias.hasError('min')  &&
+                           miFormulario.controls.existencias.touched"    >
+                           El numero debe de ser mayor o igual a 0
+                    </span>
+                    <span class="form-text text-danger"
+                            *ngIf="miFormulario.controls.existencias.hasError('required')  &&
+                            miFormulario.controls.existencias.touched">
+                        El campo es obligatorio
+                    </span>        
+                        
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit"
+                            class="btn btn-primary float-end"
+                            
+                    >Guardar</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <span>Valid</span>
+        <pre>{{miFormulario.valid}}</pre>
+        
+        <span>Prisitne</span>
+        <p>significa que no se an cambiado ninguno de los valores con los cuales se presento el formulario</p>
+        <pre>{{miFormulario.pristine}}</pre>
+        
+        <span>touched</span>
+        <p>significa que si el usuario a tocado el formulario</p>
+        <pre>{{miFormulario.touched}}</pre>
+
+        <span>Value</span>
+        <pre>{{miFormulario.value | json}}</pre>
+
+        <span>Precio</span>
+        <pre>{{miFormulario.controls.precio.errors | json}}</pre>
+        
+    </div>
+</div>

@@ -1,0 +1,152 @@
+<h2>Validaciones reactivas</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+
+        <form autocomplete="off"
+              [formGroup]="miFormulario"  >
+            <!-- Usuario -->
+            <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Nombre</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           formControlName="nombre"
+                           placeholder="Nombre del usuario">      
+
+                    <span class="form-text text-danger"
+                          *ngIf="validarCampoRequerido('nombre')"  >
+                        el campo es obligatorio
+                    </span>
+                    
+                    <span class="form-text text-danger"
+                          *ngIf="errorPersonalizado('nombre')"  >
+                        debe de contener el nombre y un apellido
+                    </span> 
+                </div>
+            </div>
+
+             <!-- Email -->
+             <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Email</label>
+                <div class="col-sm-9">
+                    <input type="email"
+                           class="form-control"
+                           placeholder="Correo electronico"
+                           formControlName="email">      
+
+                    <span class="form-text text-danger"
+                          *ngIf="validarCampoRequerido('email')"  >
+                        El correo es obligatorio
+                    </span>
+                    <span class="form-text text-danger"
+                          *ngIf="errorPersonalizado('email')"  >
+                        El correo no es valido
+                    </span>       
+                </div>
+            </div>
+
+             <!-- Usuario -->
+             <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">UserName</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           placeholder="Nombre código del usuario"
+                           formControlName="userName">      
+
+                    <span class="form-text text-danger"
+                          *ngIf="validarCampoRequerido('userName')"  >
+                        El campo es obligatorio
+                    </span>
+                    <span class="form-text text-danger"
+                          *ngIf="miFormulario.controls.userName?.hasError('noStrider');"  >
+                        No puede ser strider
+                    </span>        
+                </div>
+            </div>
+
+             <!-- password -->
+             <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Password</label>
+                <div class="col-sm-9">
+                    <input type="password"
+                           class="form-control"
+                           formControlName="password"
+                           placeholder="Password de la cuenta">      
+
+                    <span class="form-text text-danger"
+                          *ngIf="campoNoValido('password1')"  >
+                        la contraeña debe de ser de  6 caracteres
+                    </span>    
+                </div>
+            </div>
+
+             <!-- password 2-->
+             <div class="row mb-3">
+                <label class="col-sm-3 col-form-label">Confirmar</label>
+                <div class="col-sm-9">
+                    <input type="password"
+                           class="form-control"
+                           formControlName="password2"
+                           placeholder="Confirmar la contraseña">      
+
+                <span class="form-text text-danger"
+                      *ngIf="campoNoValido('password2')"  >
+                    Las contraseñas deben de ser iguales
+                </span>    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button class="btn btn-primary float-end"
+                            type="submit"
+                            (click)="guardar()"                             
+                    >Guardar</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col">
+        <h2>Valid: {{miFormulario.valid}}</h2>
+
+        <h2>Form Errors</h2>
+        <pre>{{miFormulario.errors | json}}</pre>
+        
+        <h2>Prisitne: {{miFormulario.pristine}}</h2>
+        <!-- <p>significa que no se an cambiado ninguno de los valores con los cuales se presento el formulario</p> -->
+        
+        <h2>touched: {{miFormulario.touched}}</h2>
+        <!-- <p>significa que si el usuario a tocado el formulario</p> -->
+       
+
+        <span>Value</span>
+        <pre>{{miFormulario.value | json}}</pre>
+
+        <span>Nombre</span>
+        <pre>{{miFormulario.controls.nombre.errors | json}}</pre>
+
+
+        <span>email</span>
+        <pre>{{miFormulario.controls.email.errors | json}}</pre>
+
+        <span>UserName</span>
+        <pre>{{miFormulario.controls.userName.errors | json}}</pre>
+
+
+        <span>Password</span>
+        <pre>{{miFormulario.controls.password.errors | json}}</pre>
+
+
+
+        <span>Password2</span>
+        <pre>{{miFormulario.controls.password2.errors | json}}</pre>
+    </div>
+</div>       

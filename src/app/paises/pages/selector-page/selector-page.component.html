@@ -1,0 +1,75 @@
+<h1 class="mt-5">Selectores Anidados </h1>
+<hr>
+
+
+<form [formGroup]="miFormulario" (ngSubmit)="guardar()">
+
+
+    <!-- regiones -->
+    <div class="row mb-3" >
+        <div class="col">
+            <label class="form-label">Continente:</label>
+            <select class="form-control"
+                    formControlName="region">
+
+                    <!-- [value]="region | lowercase" a qui estamos modificando el valor y lo pasamos a minuscular si fuera en el html no modifica ese valor solo visualmente    -->
+                <option value="">-- Seleccione el continente --</option>
+                <option *ngFor="let region of regiones"
+                        [value]="region | lowercase">{{region}}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Paises  -->
+    <div class="row mb-3" *ngIf="paises.length !==0">
+        <div class="col">
+            <label class="form-label">Paises:</label>
+            <select class="form-control"
+                    formControlName="pais">
+                <option value="">-- Seleccione un pais --</option>
+
+                <option *ngFor="let pais of paises"
+                        [value]="pais.alpha3Code ">{{pais.name}}</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Fronteras
+    una forma de desactivar los campos pero solo funciona con furmularios por templete [disabled]="fronteras.length === 0" areglar que pasa si los paises no tienen frontera
+    -->
+    <div class="row mb-3" *ngIf="fronteras.length > 0" >
+        <div class="col">
+            <label class="form-label">Fronteras:</label>
+            <select class="form-control"
+                    formControlName="frontera">
+                <option value="">-- Seleccione una frontera --</option>
+
+                <option *ngFor="let frontera of fronteras"
+                        [value]="frontera.name">{{frontera.name}}</option>
+            </select>
+        </div>
+    </div>
+
+
+    <!-- solo se va a mostrar si esta cargando -->
+    <div class="row" *ngIf="cargando">
+        <div class="col">
+            <div class="alert alert-primary">
+                Cargando...
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    type="submit">Seleccionar</button>
+        </div>
+    </div>
+</form>
+
+
+<h2>Valid: {{miFormulario.valid}}</h2>
+<h2>Value:</h2>
+<pre>{{miFormulario.value | json}}</pre>

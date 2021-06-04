@@ -1,0 +1,120 @@
+<!-- nota para poder utilizar formularios por templete es necesario lo sig
+import { FormsModule } from '@angular/forms';
+primero debemos importar en nuestro modulo de ese componente
+agregar una referencia local #miFormulario="ngForm"
+agregar (ngSubmit)="guardar(miFormulario)", esto puede ser opcional si utilizamos el
+@viewChild en el ts
+recuerda que a los inputs se les tiene que dar un nombre tienen que ser unicos y asignarle el ngModel -->
+
+<h2>Templeta: Básico</h2>
+<hr>
+
+<div class="row">
+    <div class="col">
+        <form (ngSubmit)="guardar()" 
+               #miFormulario="ngForm"
+               autocomplete="off">
+
+            <!-- Campo del producto -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Productos</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           class="form-control"
+                           [ngModel]="initForm.producto"
+                           name="producto"
+                           required
+                           placeholder="Nombre del producto"
+                           minlength="3">
+                    
+                    <span *ngIf="validarNombre()" 
+                        class="form-text text-danger">
+                        Debe de ser de 3 letras
+                    </span>       
+                </div>
+            </div>
+
+             <!-- Campo del precio
+            pattern="^[0-9]" 
+                           min="1" 
+                           step="1"
+            -->
+             <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Precio</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           [ngModel]="initForm.precio"
+                           name="precio"
+                           required
+                           placeholder="Precio del producto"
+                           
+                           
+                           >
+                    
+                    <span *ngIf="validarPrecio()" 
+                           class="form-text text-danger">
+                           El numero debe de ser mayor o igual a 0
+                    </span> 
+                        
+                </div>
+            </div>
+
+            <!-- Campo del existencias
+            esta reciviendo el cero como numero por que esta entre llaves [minimo]="0"
+            
+            -->
+            <div class="mb-3 row">
+                <label class="col-sm-3 col-form-label">Existencias del producto</label>
+                <div class="col-sm-9">
+                    <input type="number"
+                           class="form-control"
+                           [ngModel]="initForm.existencia"
+                           name="existencia"
+                           custonMin
+                           [minimo]="0"
+                           placeholder="Existencia del producto"
+                           required>
+                    
+                    <span *ngIf="existenciaValida()" 
+                           class="form-text text-danger">
+                           El numero debe de ser mayor o igual a 0
+                    </span>        
+                        
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <button type="submit"
+                            [disabled]="miFormulario.invalid"
+                            class="btn btn-primary float-end"
+                    >Guardar</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+
+        <span>Valid</span>
+        <pre>{{miFormulario.valid}}</pre>
+        
+        <span>Prisitne</span>
+        <p>significa que no se an cambiado ninguno de los valores con los cuales se presento el formulario</p>
+        <pre>{{miFormulario.pristine}}</pre>
+        
+        <span>touched</span>
+        <p>significa que si el usuario a tocado el formulario</p>
+        <pre>{{miFormulario.touched}}</pre>
+
+        <span>Value</span>
+        <pre>{{miFormulario.value | json}}</pre>
+        
+        <span>CustomDirective</span>
+        <pre>{{miFormulario.controls.existencia?.errors | json}}</pre>
+    </div>
+</div>
